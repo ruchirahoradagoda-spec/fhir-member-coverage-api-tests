@@ -1,0 +1,96 @@
+{
+  "info": {
+    "_postman_id": "db0b83e1-6c41-4266-94b1-298b27399b52",
+    "name": "FHIR Member Coverage API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "5033133"
+  },
+  "item": [
+    {
+      "name": "Server_Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "GET {{base_url}}/metadata",
+          "host": [
+            "GET {{base_url}}"
+          ],
+          "path": [
+            "metadata"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create_Pacient",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Prefer",
+            "value": "return=representation",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"resourceType\": \"Patient\",\r\n  \"identifier\": [{ \"system\": \"http://example.org/test-member-id\", \"value\": \"TEST-{{$timestamp}}\" }],\r\n  \"name\": [{ \"family\": \"Testmember\", \"given\": [\"Ava\"] }],\r\n  \"gender\": \"female\",\r\n  \"birthDate\": \"1990-05-14\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/Patient",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "Patient"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pacient",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          "pm.request.headers.upsert({ key: \"Accept\", value: \"application/fhir+json\" });\r",
+          "   pm.request.headers.upsert({ key: \"Content-Type\", value: \"application/fhir+json\" });"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "patient_id",
+      "value": ""
+    }
+  ]
+}
